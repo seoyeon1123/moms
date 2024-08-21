@@ -1,0 +1,14 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* styles/globals.css 또는 다른 CSS 파일에 추가 */
+/* styles/globals.css 또는 다른 CSS 파일에 추가 */
+.text-outline {
+  text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
+    1px 1px 0 #000;
+}
+
+.btn {
+  @apply w-72 h-10 bg-orange-500 text-lg text-center flex items-center justify-center rounded-2xl active:bg-orange-400;
+}
