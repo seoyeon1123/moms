@@ -10,5 +10,5 @@
 }
 
 .btn {
-  @apply w-72 h-10 bg-orange-500 text-lg text-center flex items-center justify-center rounded-2xl active:bg-orange-400;
+  @apply w-full min-w-[350px] h-10 bg-orange-500 text-lg text-center flex items-center justify-center rounded-2xl active:bg-orange-400 text-white;
 }

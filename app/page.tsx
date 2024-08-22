@@ -1,10 +1,13 @@
 import Image from 'next/image';
 import Link from 'next/link';
+import Input from './components/input';
+import MainTopBar from './components/mainTopBar';
 
 export default function MainPage() {
   return (
     <>
-      <div className="relative w-screen h-screen flex flex-row justify-center items-center gap-10">
+      <MainTopBar />
+      <div className="relative w-screen h-screen flex flex-row justify-center items-center gap-32">
         <div className="relative w-96 h-96">
           <Image
             fill
@@ -12,31 +15,34 @@ export default function MainPage() {
             alt="mom and baby"
             className="object-cover"
           />
-          <h1 className="absolute inset-0 flex items-center justify-center text-orange-200 text-4xl font-bold text-outline">
-            엄마와
-            <br />
+          <h1 className="absolute inset-0 flex items-center justify-center text-orange-200 text-4xl font-bold text-outline text-center">
             아이와
+            <br />
+            함께
           </h1>
         </div>
         <div className="bottom-10 flex flex-col items-center gap-8">
-          <p className="text-4xl font-semibold">아이, 우리와 함께 키워요</p>
+          <div className="flex flex-col gap-5 mb-5">
+            <p className="text-4xl font-semibold">아이, 우리와 함께 키워요</p>
+            <h1 className="text-6xl font-bold">엄마들</h1>
+          </div>
           <div className="flex flex-col gap-4">
             <form className="flex flex-col justify-center items-center gap-4">
-              <input
-                className="w-full bg-white border-2 rounded-lg border-neutral-400 py-2 px-4 text-gray-800 placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200 ease-in-out"
+              <Input
                 type="text"
                 placeholder="Username"
                 required
                 name="username"
+                errors={[]}
               />
-              <input
-                className="w-full bg-white border-2 rounded-lg border-neutral-400 py-2 px-4 text-gray-800 placeholder-gray-500 focus:outline-none focus:border-blue-500 focus:ring-1 focus:ring-blue-500 transition-all duration-200 ease-in-out"
-                type="text"
-                placeholder="Username"
+              <Input
+                type="password"
+                placeholder="password"
                 required
-                name="username"
+                name="password"
+                errors={[]}
               />
-              <button className="btn">로그인하기</button>
+              <button className="btn">로그인</button>
             </form>
           </div>
           <div className="flex flex-col text-center">
