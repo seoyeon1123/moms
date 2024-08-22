@@ -9,6 +9,19 @@
     1px 1px 0 #000;
 }
 
+.spin-slow {
+  animation: spin 10s linear infinite;
+}
+
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
 .btn {
   @apply w-full min-w-[350px] h-10 bg-orange-500 text-lg text-center flex items-center justify-center rounded-2xl active:bg-orange-400 text-white;
 }

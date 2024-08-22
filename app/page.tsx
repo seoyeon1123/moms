@@ -13,7 +13,7 @@ export default function MainPage() {
             fill
             src={`/엄마와_아이들.png`}
             alt="mom and baby"
-            className="object-cover"
+            className="object-cover transition-transform spin-slow"
           />
           <h1 className="absolute inset-0 flex items-center justify-center text-orange-200 text-4xl font-bold text-outline text-center">
             아이와
