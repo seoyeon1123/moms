@@ -3,7 +3,7 @@ interface InputProps {
   placeholder: string;
   required: boolean;
   name: string;
-  errors: string[];
+  errors?: string[]; // optional
 }
 
 export default function Input({
@@ -11,7 +11,7 @@ export default function Input({
   placeholder,
   required,
   name,
-  errors,
+  errors = [], // Default to empty array
 }: InputProps) {
   return (
     <>
@@ -22,12 +22,11 @@ export default function Input({
         required={required}
         name={name}
       />
-      {errors &&
-        errors.map((error, index) => (
-          <div key={index} className="text-sm font-semibold text-red-600">
-            {error}
-          </div>
-        ))}
+      {errors.map((error, index) => (
+        <div key={index} className="text-sm font-semibold text-red-600">
+          {error}
+        </div>
+      ))}
     </>
   );
 }

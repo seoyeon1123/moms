@@ -1,13 +1,20 @@
+'use client';
+
 import Link from 'next/link';
-import Input from '../components/input';
+import Input from '@/components/input';
 import MomsLogo from '../lib/logo';
+import { useFormState } from 'react-dom';
+import LoginAction from './actions';
 
 export default function LoginPage() {
+  const [state, action] = useFormState(LoginAction, null);
   return (
-    <div className="w-screen h-screen flex flex-col justify-center items-center gap-10 px-4">
+    <div className="w-screen h-screen flex flex-col justify-center items-center gap-10 px-4 ">
       <MomsLogo />
-      <h1 className="text-2xl font-bold text-left w-full max-w-md">로그인</h1>
-      <div className="w-full max-w-md">
+      <h1 className="text-2xl font-bold text-left w-full max-w-md pt-10">
+        로그인
+      </h1>
+      <form className="w-full max-w-md flex flex-col gap-5" action={action}>
         <div className="mb-4">
           <h3 className="text-lg font-medium mb-2">아이디</h3>
           <Input
@@ -15,7 +22,7 @@ export default function LoginPage() {
             placeholder="Username"
             required
             name="username"
-            errors={[]}
+            errors={state?.fieldErrors.username}
           />
         </div>
 
@@ -26,15 +33,20 @@ export default function LoginPage() {
             placeholder="Password"
             required
             name="password"
-            errors={[]}
+            errors={state?.fieldErrors.password}
           />
         </div>
         <button className="btn w-full">로그인하기</button>
-      </div>
-      <hr className="w-full max-w-md h-1 bg-neutral-400" />
-      <div className="flex flex-row justify-between">
-        <p>회원이 아니신가요? </p>
-        <Link href="/signup">회원가입</Link>
+      </form>
+      <hr className="w-full max-w-md h-px bg-neutral-900" />
+      <div className="flex flex-row justify-between gap-4 items-center *:text-sm pt-0">
+        <Link href="/signup" className="font-semibold text-orange-600">
+          회원가입
+        </Link>
+        <span>|</span>
+        <Link href="/account/find-username">아이디 찾기</Link>
+        <span>|</span>
+        <Link href="/account/find-password">비밀번호 찾기</Link>
       </div>
     </div>
   );

@@ -1,5 +1,5 @@
 import Link from 'next/link';
-import MomsLogo from '../lib/logo';
+import MomsLogo from '../app/lib/logo';
 
 export default function MainTopBar() {
   return (
@@ -12,7 +12,7 @@ export default function MainTopBar() {
           </div>
           <div className="flex flex-row gap-2 text-center">
             <Link
-              href="/signup"
+              href="/account/signup"
               className="w-24 p-2 bg-orange-500 text-white hover:bg-orange-600 transition-all duration-300 rounded-lg"
             >
               회원가입

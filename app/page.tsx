@@ -1,7 +1,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
-import Input from './components/input';
-import MainTopBar from './components/mainTopBar';
+import Input from '@/components/input';
+import MainTopBar from '@/components/mainTopBar';
 
 export default function MainPage() {
   return (
@@ -45,13 +45,17 @@ export default function MainPage() {
               <button className="btn">로그인</button>
             </form>
           </div>
-          <div className="flex flex-col text-center">
-            <p className="pb-1 text-sm text-neutral-600">
-              아직 회원이 아니신가요?
-            </p>
-            <Link href="/signup" className="btn">
+          <div className="flex flex-row text-center *:text-sm gap-3">
+            <Link
+              href="/account/signup"
+              className="text-sm text-orange-600 font-semibold"
+            >
               회원가입하기
             </Link>
+            <span>|</span>
+            <Link href="/account/find-username">아이디 찾기</Link>
+            <span>|</span>
+            <Link href="/account/find-password">비밀번호 찾기</Link>
           </div>
         </div>
       </div>
