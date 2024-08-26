@@ -36,32 +36,31 @@ export default function AgeGroutSelector({ onChange }: AgeGroupSelectorProps) {
     setSelected(value);
     onChange(value);
   };
+
   return (
-    <>
-      <div>
-        <label
-          htmlFor="age-group"
-          className="block text-sm font-medium text-gray-700"
-        >
-          연령대 선택
-        </label>
-        <select
-          id="age-group"
-          name="age-group"
-          value={selected}
-          onChange={handleChange}
-          className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-orange-500 focus:ring focus:ring-orange-500 focus:ring-opacity-50"
-        >
-          <option value="" disabled>
-            연령대를 선택하세요
+    <div className="flex flex-col items-start gap-2 w-full">
+      <label
+        htmlFor="age-group"
+        className="text-sm font-medium text-neutral-500"
+      >
+        연령 선택
+      </label>
+      <select
+        id="age-group"
+        name="age-group"
+        value={selected}
+        onChange={handleChange}
+        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-orange-500 focus:ring focus:ring-orange-500 focus:ring-opacity-50"
+      >
+        <option value="" disabled>
+          연령대를 선택하세요
+        </option>
+        {allAgeGroups.map((group) => (
+          <option key={group.value} value={group.value}>
+            {group.label}
           </option>
-          {allAgeGroups.map((group) => (
-            <option key={group.value} value={group.value}>
-              {group.label}
-            </option>
-          ))}
-        </select>
-      </div>
-    </>
+        ))}
+      </select>
+    </div>
   );
 }
