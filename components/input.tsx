@@ -3,6 +3,7 @@ interface InputProps {
   placeholder: string;
   required: boolean;
   name: string;
+  value?: string;
   errors?: string[]; // optional
 }
 
@@ -11,6 +12,7 @@ export default function Input({
   placeholder,
   required,
   name,
+  value,
   errors = [], // Default to empty array
 }: InputProps) {
   return (
