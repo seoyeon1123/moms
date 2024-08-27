@@ -42,9 +42,8 @@ export default function AgeGroutSelector({ onChange }: AgeGroupSelectorProps) {
       <label
         htmlFor="age-group"
         className="text-sm font-medium text-neutral-500"
-      >
-        연령 선택
-      </label>
+      />
+
       <select
         id="age-group"
         name="age-group"

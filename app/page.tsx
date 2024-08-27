@@ -1,9 +1,14 @@
+'use client';
+
 import Image from 'next/image';
 import Link from 'next/link';
 import Input from '@/components/input';
 import MainTopBar from '@/components/mainTopBar';
+import LoginAction from './login/actions';
+import { useFormState } from 'react-dom';
 
 export default function MainPage() {
+  const [state, action] = useFormState(LoginAction, null);
   return (
     <>
       <MainTopBar />
@@ -27,20 +32,23 @@ export default function MainPage() {
             <h1 className="text-6xl font-bold">엄마들</h1>
           </div>
           <div className="flex flex-col gap-4">
-            <form className="flex flex-col justify-center items-center gap-4">
+            <form
+              className="flex flex-col justify-center items-center gap-4 "
+              action={action}
+            >
               <Input
                 type="text"
                 placeholder="Username"
                 required
                 name="username"
-                errors={[]}
+                errors={state?.fieldErrors.username}
               />
               <Input
                 type="password"
                 placeholder="password"
                 required
                 name="password"
-                errors={[]}
+                errors={state?.fieldErrors.password}
               />
               <button className="btn">로그인</button>
             </form>

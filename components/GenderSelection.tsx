@@ -34,9 +34,8 @@ export default function GenderSelection({ onChange }: IGenderSelectionProps) {
         <label
           htmlFor="gender-select"
           className="text-sm font-medium text-neutral-500"
-        >
-          성별 선택
-        </label>
+        />
+
         <select
           id="gender-select"
           name="gender-select"
