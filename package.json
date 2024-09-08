@@ -16,6 +16,7 @@
     "heroicons": "^2.1.5",
     "iron-session": "^8.0.3",
     "next": "14.2.5",
+    "nodemailer": "^6.9.14",
     "react": "^18",
     "react-dom": "^18",
     "zod": "^3.23.8"

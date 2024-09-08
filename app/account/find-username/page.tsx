@@ -46,13 +46,29 @@ export default function FindUsername() {
             아이디는 {username} 입니다
           </p>
           <div className="flex flex-row justify-between items-center">
-            <p>비밀번호 찾으시러 가실래요 ? </p>
-            <Link
-              href="/account/find-password"
-              className="border-2 bg-orange-400 p-2 text-sm rounded-full px-4 active:bg-orange-300"
-            >
-              비밀번호 찾기
-            </Link>
+            <div>
+              <p className="flex flex-row items-center justify-between gap-2">
+                <Link
+                  href="/account/find-password"
+                  className="text-lg text-orange-500 font-semibold"
+                >
+                  비밀번호
+                </Link>
+                찾으시러 가실래요 ?{' '}
+              </p>
+            </div>
+            <p className="bg-orange-500 rounded-2xl p-1"> OR</p>
+            <div>
+              <p className="flex flex-row items-center justify-between gap-2">
+                <Link
+                  href="/login"
+                  className="text-lg text-orange-500 font-semibold"
+                >
+                  로그인
+                </Link>
+                하러 가실래요 ?{' '}
+              </p>
+            </div>
           </div>
         </>
       ) : (

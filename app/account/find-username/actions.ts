@@ -12,5 +12,6 @@ export async function checkEmail(email: string) {
       id: true,
     },
   });
+
   return user;
 }
