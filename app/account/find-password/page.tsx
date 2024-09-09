@@ -50,17 +50,19 @@ export default function FindPassword() {
   };
 
   return (
-    <div className="flex flex-col items-center justify-center min-h-screen">
-      <div className="flex justify-center mb-10">
+    <div className="mx-auto flex flex-col justify-start w-full max-w-md h-screen gap-10 px-4 mt-56">
+      <div className="flex justify-center mb-8">
         <MomsLogo />
       </div>
 
       {resetMode ? (
         <div className="flex flex-col items-start gap-5 w-full max-w-md p-5">
-          <p className="text-sm font-semibold">새로운 비밀번호를 입력하세요.</p>
+          <p className="text-lg font-semibold">
+            ✚ 새로운 비밀번호를 입력하세요.
+          </p>
           <form
             onSubmit={handleUpdateSubmit}
-            className="flex flex-col gap-2 w-full"
+            className="flex flex-col gap-4 w-full"
           >
             <input
               className="w-full bg-white border-2 rounded-lg border-neutral-200 py-2 px-4 text-gray-800 placeholder-gray-500 focus:outline-none focus:border-orange-500 focus:ring-1 focus:ring-orange-500 transition-all duration-200 ease-in-out"
@@ -104,7 +106,7 @@ export default function FindPassword() {
         </div>
       ) : (
         <div className="flex flex-col items-start gap-5 w-full max-w-md p-5">
-          <h1 className="text-4xl">비밀번호 찾기</h1>
+          <h1 className="text-3xl font-semibold">비밀번호 찾기</h1>
           <p>엄마들에 가입한 아이디를 입력하세요</p>
           <form onSubmit={handleSubmit} className="w-full">
             <input
