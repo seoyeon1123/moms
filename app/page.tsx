@@ -4,8 +4,8 @@ import Image from 'next/image';
 import Link from 'next/link';
 import Input from '@/components/input';
 import MainTopBar from '@/components/mainTopBar';
-import LoginAction from './login/actions';
 import { useFormState } from 'react-dom';
+import LoginAction from './(auth)/login/actions';
 
 export default function MainPage() {
   const [state, action] = useFormState(LoginAction, null);

@@ -1,10 +1,10 @@
 'use server';
 
 import z from 'zod';
-import db from '../lib/db';
 import bcrypt from 'bcrypt';
-import getSession from '../lib/session';
 import { redirect } from 'next/navigation';
+import db from '@/app/lib/db';
+import getSession from '@/app/lib/session';
 
 const checkUsername = async (username: string) => {
   const user = await db.user.findUnique({
