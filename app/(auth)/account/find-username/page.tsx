@@ -2,8 +2,8 @@
 
 import { useState } from 'react';
 import Input from '@/components/input';
-import MomsLogo from '@/app/lib/logo';
-import db from '@/app/lib/db';
+import MomsLogo from '@/lib/logo';
+import db from '@/lib/db';
 import { checkEmail } from './actions';
 import Link from 'next/link';
 

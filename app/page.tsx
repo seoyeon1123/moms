@@ -3,15 +3,15 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import Input from '@/components/input';
-import MainTopBar from '@/components/mainTopBar';
 import { useFormState } from 'react-dom';
 import LoginAction from './(auth)/login/actions';
+import AuthTopBar from '@/components/AuthTopBar';
 
 export default function MainPage() {
   const [state, action] = useFormState(LoginAction, null);
   return (
     <>
-      <MainTopBar />
+      <AuthTopBar />
       <div className="relative w-screen h-screen flex flex-row justify-center items-center gap-32">
         <div className="relative w-96 h-96">
           <Image

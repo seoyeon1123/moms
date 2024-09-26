@@ -1,7 +1,7 @@
 'use client';
 
 import Input from '@/components/input';
-import MomsLogo from '../../../lib/logo';
+import MomsLogo from '../../../../lib/logo';
 import { useFormState } from 'react-dom';
 import createSignup from '@/app/(auth)/account/signup/actions';
 

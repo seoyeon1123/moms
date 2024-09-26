@@ -1,31 +1,76 @@
-import Link from 'next/link';
-import MomsLogo from '../app/lib/logo';
+import db from '@/lib/db';
+import MomsLogo from '@/lib/logo';
+import getSession from '@/lib/session';
+import { ShoppingCartIcon, UserIcon } from '@heroicons/react/24/outline';
+import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+import { faVenus, faMars } from '@fortawesome/free-solid-svg-icons';
 
-export default function MainTopBar() {
+import Link from 'next/link';
+
+async function getBabyProfile(userId: number) {
+  const babyProfiles = await db.babyProfile.findMany({
+    where: {
+      userId: userId, // userId로 검색
+    },
+    select: {
+      nickName: true,
+      babyGender: true,
+    },
+  });
+  // 첫 번째 결과를 반환하거나 null을 반환합니다.
+  return babyProfiles.length > 0 ? babyProfiles[0] : null;
+}
+
+export default async function MainTopBar() {
+  const session = await getSession();
+  console.log(session.id!);
+  const babyProfile = await getBabyProfile(session.id!);
+
+  console.log(babyProfile);
   return (
-    <>
-      <div className="fixed top-0 left-0 w-full bg-white shadow-md z-50">
-        <div className="flex flex-row justify-around mt-4 mb-2">
-          <div className="flex flex-row justify-center items-center gap-4">
-            <MomsLogo />
-            <h1>엄마들</h1>
+    <div className="p-10 flex flex-col gap-3 bg-white w-full h-32">
+      <div className="flex flex-row justify-between">
+        <Link href="/home">
+          <MomsLogo />
+        </Link>
+        <div className="flex flex-row gap-6 items-center">
+          <div className="flex flex-row items-center gap-2">
+            {babyProfile?.babyGender === '남자' ? (
+              <FontAwesomeIcon icon={faMars} className="text-blue-500 size-8" />
+            ) : (
+              <FontAwesomeIcon
+                icon={faVenus}
+                className="text-pink-500 size-8"
+              />
+            )}
+            <h1 className="text-black ">{babyProfile?.nickName!}</h1>
           </div>
-          <div className="flex flex-row gap-2 text-center">
-            <Link
-              href="/account/signup"
-              className="w-24 p-2 bg-orange-500 text-white hover:bg-orange-600 transition-all duration-300 rounded-lg"
-            >
-              회원가입
-            </Link>
-            <Link
-              href="/login"
-              className="w-24 p-2 border-2 border-orange-500 text-orange-500  rounded-lg transition-all duration-300"
-            >
-              로그인
-            </Link>
-          </div>
+          <Link href="/cart">
+            <ShoppingCartIcon className="size-8" />
+          </Link>
+          <Link href="/myProfile">
+            <UserIcon className="size-8" />
+          </Link>
         </div>
       </div>
-    </>
+
+      <div className="flex flex-row gap-8 *:text-sm font-semibold ">
+        <Link href="/products/markets">
+          <h1 className="mainTap">맘스 마켓</h1>
+        </Link>
+        <Link href="/products/shareOrsell">
+          <h1 className="mainTap">맘스 장터</h1>
+        </Link>
+        <Link href="/chats">
+          <h1 className="mainTap">맘스 톡톡</h1>
+        </Link>
+        <Link href="/posts">
+          <h1 className="mainTap">맘스 속닥속닥</h1>
+        </Link>
+        <Link href="/photos">
+          <h1 className="mainTap">우리 아이의 사진첩</h1>
+        </Link>
+      </div>
+    </div>
   );
 }

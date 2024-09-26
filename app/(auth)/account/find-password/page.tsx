@@ -1,6 +1,6 @@
 'use client';
 
-import MomsLogo from '@/app/lib/logo';
+import MomsLogo from '@/lib/logo';
 import { useState } from 'react';
 import { checkPassword, UpdatePassword } from './actions';
 import Link from 'next/link';

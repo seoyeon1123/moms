@@ -1,6 +1,6 @@
 'use server';
 
-import db from '@/app/lib/db';
+import db from '@/lib/db';
 import bcrypt from 'bcrypt';
 
 // 사용자가 있는지 확인하는 함수

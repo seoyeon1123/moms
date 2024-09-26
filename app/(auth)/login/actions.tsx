@@ -3,8 +3,8 @@
 import z from 'zod';
 import bcrypt from 'bcrypt';
 import { redirect } from 'next/navigation';
-import db from '@/app/lib/db';
-import getSession from '@/app/lib/session';
+import db from '@/lib/db';
+import getSession from '@/lib/session';
 
 const checkUsername = async (username: string) => {
   const user = await db.user.findUnique({

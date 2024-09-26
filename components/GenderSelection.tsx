@@ -32,13 +32,13 @@ export default function GenderSelection({ onChange }: IGenderSelectionProps) {
     <>
       <div className="flex flex-col items-start gap-2 w-full">
         <label
-          htmlFor="gender-select"
+          htmlFor="gender"
           className="text-sm font-medium text-neutral-500"
         />
 
         <select
-          id="gender-select"
-          name="gender-select"
+          id="gender"
+          name="gender"
           value={selected}
           onChange={handleChange}
           className="mt-1 block w-full border-gray-300 rounded-md shadow-sm focus:border-orange-500 focus:ring focus:ring-orange-500 focus:ring-opacity-50"

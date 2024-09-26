@@ -1,5 +1,5 @@
 import FooterInfo from '@/components/FooterInfo';
-import MomsLogo from '../lib/logo';
+import MomsLogo from '../../lib/logo';
 import AuthHeader from '@/components/AuthHeader';
 
 export default function AccountLayout({

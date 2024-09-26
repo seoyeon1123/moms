@@ -1,4 +1,4 @@
-import MomsLogo from '@/app/lib/logo';
+import MomsLogo from '@/lib/logo';
 
 export default function AuthHeader() {
   return (

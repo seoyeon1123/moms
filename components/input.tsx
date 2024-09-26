@@ -5,6 +5,7 @@ interface InputProps {
   name: string;
   value?: string;
   errors?: string[]; // optional
+  className?: string;
 }
 
 export default function Input({
@@ -13,6 +14,7 @@ export default function Input({
   required,
   name,
   value,
+  className,
   errors = [], // Default to empty array
 }: InputProps) {
   return (

@@ -1,8 +1,8 @@
 'use server';
 
-import db from '../../../lib/db';
+import db from '../../../../lib/db';
 import z from 'zod';
-import getSession from '../../../lib/session';
+import getSession from '../../../../lib/session';
 import { redirect } from 'next/navigation';
 import bcrypt from 'bcrypt';
 
