@@ -45,14 +45,12 @@ export default function LikeButton({
     <>
       <button
         onClick={onClick}
-        className={`flex items-center gap-2   transition-colors ${
-          state.isLiked ? ' text-red-600 ' : 'text-black'
-        }`}
+        className="flex items-center gap-2   transition-colors"
       >
         {state.isLiked ? (
-          <HeartIcon className="size-8" />
+          <HeartIcon className="size-8 text-red-600" />
         ) : (
-          <HeartIcon className="size-8" />
+          <HeartIcon className="size-8 text-black" />
         )}
       </button>
     </>
