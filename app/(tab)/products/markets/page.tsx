@@ -1,10 +1,13 @@
 'use client';
-import { NaverProduct } from '@/types/NaverProduct';
-import { useEffect, useState } from 'react';
-import { getProduct } from './action';
+
 import Image from 'next/image';
+import { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { NaverProduct } from '@/types/NaverProduct';
+import { getProduct } from './action';
 import ProductSearchForm from '@/components/ProductSearch';
 import { formatToWon } from '@/lib/utils';
+import MarketLoading from './loading';
 
 export interface GetProductParams {
   query: string;
@@ -14,10 +17,21 @@ export interface GetProductParams {
 const HomePage = () => {
   const [products, setProducts] = useState<NaverProduct[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
+  const [isLoading, setIsLoading] = useState(true); // 첫 로딩 상태
+  const [isPageLoading, setIsPageLoading] = useState(false); // 페이지 변경 로딩 상태
   const productNum = 12;
 
-  // 초기 로딩 시 데이터 가져오기
-  const fetchProducts = async (query: string, page: number) => {
+  // 첫 로딩 시 데이터 가져오기
+  const fetchProducts = async (
+    query: string,
+    page: number,
+    isInitialLoad = false
+  ) => {
+    if (isInitialLoad) {
+      setIsLoading(true); // 처음 로딩
+    } else {
+      setIsPageLoading(true); // 페이지 변경 시 로딩
+    }
     try {
       console.log('Fetching products...');
       const data = await getProduct({ query, offset: page * productNum });
@@ -29,79 +43,93 @@ const HomePage = () => {
           const newProducts = data.filter(
             (product: NaverProduct) =>
               !existingProductIds.has(product.productId)
-          ); // NaverProduct 타입 지정
+          );
           return [...prevProducts, ...newProducts];
         });
       }
     } catch (error) {
       console.error(error);
     } finally {
+      if (isInitialLoad) {
+        setIsLoading(false); // 첫 로딩 완료
+      } else {
+        setIsPageLoading(false); // 페이지 로딩 완료
+      }
     }
   };
 
-  // 컴포넌트 마운트 시 초기 데이터 로딩
+  // 첫 로딩 시 '유아모자' 검색어로 데이터 가져오기
   useEffect(() => {
-    fetchProducts('유아모자', 1); // 최초 데이터 가져오기
+    fetchProducts('유아모자', 1, true); // 첫 로딩
   }, []);
 
-  // 페이지가 변경될 때 데이터 가져오기
+  // 페이지 변경 시 데이터 가져오기
   useEffect(() => {
     if (currentPage > 1) {
-      // 현재 페이지가 0이 아닐 때만
-      fetchProducts('유아모자', currentPage);
+      fetchProducts('유아모자', currentPage); // 페이지 로딩
     }
   }, [currentPage]);
 
   const cleanTitle = (title: string) => {
-    return title.replace(/<\/?b>/g, ''); // <b> 및 </b> 태그 제거
+    return title.replace(/<\/?b>/g, '');
   };
 
-  // 사용 예
   const cleanedProducts = products.map((product) => ({
     ...product,
-    title: cleanTitle(product.title), // 제목에서 <b> 태그 제거
+    title: cleanTitle(product.title),
   }));
 
   const handleNextPage = () => {
-    setCurrentPage((prev) => prev + 1); // 다음 페이지로 이동
+    setCurrentPage((prev) => prev + 1);
   };
 
   return (
     <>
-      <div className="flex flex-col text-center p-5 ">
-        <div>
-          <ProductSearchForm setProducts={setProducts} />
+      {/* 첫 로딩 시 로딩 컴포넌트 표시 */}
+      {isLoading ? (
+        <MarketLoading />
+      ) : (
+        <div className="flex flex-col text-center px-5 bg-yellow-50">
+          <div className="my-1">
+            <ProductSearchForm setProducts={setProducts} />
+          </div>
+          <ul className="flex flex-wrap justify-center">
+            {cleanedProducts.map((product) => (
+              <li key={product.productId} className="w-1/4 p-4">
+                <Link
+                  className="flex flex-col items-center justify-evenly text-center p-2 hover:scale-105 transition-transform ease-in-out duration-200 bg-white shadow-md rounded-lg h-[420px]"
+                  href={product.link}
+                >
+                  <Image
+                    src={product.image}
+                    alt={product.title}
+                    width={300}
+                    height={300}
+                    className="aspect-square object-cover"
+                  />
+                  <div className="flex flex-col gap-2 pt-2 px-10">
+                    <h2 className="font-semibold text-gray-800">
+                      {product.title}
+                    </h2>
+                    <p className="text-sm text-orange-600">
+                      {formatToWon(product.lprice)}
+                    </p>
+                  </div>
+                </Link>
+              </li>
+            ))}
+          </ul>
+          <div className="flex items-center justify-center p-5">
+            <button
+              onClick={handleNextPage}
+              className="bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded-full px-7 py-2 transition-colors duration-300"
+              disabled={isPageLoading} // 페이지 로딩 중 버튼 비활성화
+            >
+              {isPageLoading ? '로딩 중...' : '다음'}
+            </button>
+          </div>
         </div>
-        <ul className="flex flex-wrap ">
-          {cleanedProducts.map((product) => (
-            <li key={product.productId} className="w-1/4">
-              <div className="flex flex-col items-center justify-evenly *:text-center p-2">
-                <Image
-                  src={product.image}
-                  alt={product.title}
-                  width={300}
-                  height={300}
-                  className="aspect-square object-cover"
-                />
-                <div className="flex flex-col gap-2 pt-2 px-10">
-                  <h2 className="font-semibold overflow-hidden">
-                    {product.title}
-                  </h2>
-                  <p className="text-sm">{formatToWon(product.lprice)}</p>
-                </div>
-              </div>
-            </li>
-          ))}
-        </ul>
-        <div className="flex items-center justify-center p-5">
-          <button
-            onClick={handleNextPage}
-            className=" bg-orange-600 rounded-full px-7 py-2 "
-          >
-            다음
-          </button>
-        </div>
-      </div>
+      )}
     </>
   );
 };

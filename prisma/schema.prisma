@@ -15,6 +15,9 @@ model User {
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
   babyProfiles BabyProfile[]
+  products Product[]
+
+  like Like[]
 }
 
 model BabyProfile {
@@ -28,4 +31,30 @@ model BabyProfile {
   updatedAt  DateTime @updatedAt
   user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId Int
+}
+
+model Product {
+  id Int @id @default(autoincrement())
+  title String
+  description String
+  photo String
+  category String
+  price Int?
+  share Boolean?
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+
+  views Int @default(0)
+  like Like[]
+}
+
+model Like {
+  @@id(name : "id", [userId, productId]) 
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
+
+  product        Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
+  productId Int
 }

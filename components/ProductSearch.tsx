@@ -30,7 +30,7 @@ export default function ProductSearchForm({
 
   return (
     <form
-      className="flex flex-row justify-end items-center left-3 gap-2 pr-16 my-5"
+      className="flex flex-row justify-end items-center left-3 gap-2 pr-8 my-5"
       onSubmit={handleSearch}
     >
       <input

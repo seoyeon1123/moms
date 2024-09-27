@@ -1,7 +1,11 @@
 import db from '@/lib/db';
 import MomsLogo from '@/lib/logo';
 import getSession from '@/lib/session';
-import { ShoppingCartIcon, UserIcon } from '@heroicons/react/24/outline';
+import {
+  HeartIcon,
+  ShoppingCartIcon,
+  UserIcon,
+} from '@heroicons/react/24/outline';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faVenus, faMars } from '@fortawesome/free-solid-svg-icons';
 
@@ -28,25 +32,25 @@ export default async function MainTopBar() {
 
   console.log(babyProfile);
   return (
-    <div className="p-10 flex flex-col gap-3 bg-white w-full h-32">
+    <div className="p-10 flex flex-col gap-2 bg-white w-full h-32 border border-b-2 pb-10">
       <div className="flex flex-row justify-between">
         <Link href="/home">
           <MomsLogo />
         </Link>
-        <div className="flex flex-row gap-6 items-center">
+        <div className="flex flex-row gap-6 items-center rounded-full border-4 border-orange-300 bg-opacity-40 px-5 py-1">
           <div className="flex flex-row items-center gap-2">
             {babyProfile?.babyGender === '남자' ? (
-              <FontAwesomeIcon icon={faMars} className="text-blue-500 size-8" />
+              <FontAwesomeIcon icon={faMars} className="text-blue-500 size-6" />
             ) : (
               <FontAwesomeIcon
                 icon={faVenus}
-                className="text-pink-500 size-8"
+                className="text-pink-500 size-6"
               />
             )}
             <h1 className="text-black ">{babyProfile?.nickName!}</h1>
           </div>
           <Link href="/cart">
-            <ShoppingCartIcon className="size-8" />
+            <HeartIcon className="size-8" />
           </Link>
           <Link href="/myProfile">
             <UserIcon className="size-8" />
@@ -54,7 +58,7 @@ export default async function MainTopBar() {
         </div>
       </div>
 
-      <div className="flex flex-row gap-8 *:text-sm font-semibold ">
+      <div className="flex flex-row gap-8 *:text-sm font-semibold">
         <Link href="/products/markets">
           <h1 className="mainTap">맘스 마켓</h1>
         </Link>
