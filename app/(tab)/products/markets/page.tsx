@@ -18,19 +18,20 @@ const HomePage = () => {
   const [products, setProducts] = useState<NaverProduct[]>([]);
   const [currentPage, setCurrentPage] = useState(0);
   const [isLoading, setIsLoading] = useState(true); // 첫 로딩 상태
-  const [isPageLoading, setIsPageLoading] = useState(false); // 페이지 변경 로딩 상태
-  const productNum = 12;
+  const [isPageLoading, setIsPageLoading] = useState(false);
+  const productNum = 8;
 
-  // 첫 로딩 시 데이터 가져오기
+  const [query, setQuery] = useState('');
+
   const fetchProducts = async (
     query: string,
     page: number,
     isInitialLoad = false
   ) => {
     if (isInitialLoad) {
-      setIsLoading(true); // 처음 로딩
+      setIsLoading(true);
     } else {
-      setIsPageLoading(true); // 페이지 변경 시 로딩
+      setIsPageLoading(true);
     }
     try {
       console.log('Fetching products...');
@@ -51,22 +52,20 @@ const HomePage = () => {
       console.error(error);
     } finally {
       if (isInitialLoad) {
-        setIsLoading(false); // 첫 로딩 완료
+        setIsLoading(false);
       } else {
-        setIsPageLoading(false); // 페이지 로딩 완료
+        setIsPageLoading(false);
       }
     }
   };
 
-  // 첫 로딩 시 '유아모자' 검색어로 데이터 가져오기
   useEffect(() => {
-    fetchProducts('유아모자', 1, true); // 첫 로딩
+    fetchProducts('유아모자', 1, true);
   }, []);
 
-  // 페이지 변경 시 데이터 가져오기
   useEffect(() => {
     if (currentPage > 1) {
-      fetchProducts('유아모자', currentPage); // 페이지 로딩
+      fetchProducts(query, currentPage);
     }
   }, [currentPage]);
 
@@ -85,19 +84,29 @@ const HomePage = () => {
 
   return (
     <>
-      {/* 첫 로딩 시 로딩 컴포넌트 표시 */}
       {isLoading ? (
         <MarketLoading />
       ) : (
-        <div className="flex flex-col text-center px-5 bg-yellow-50">
-          <div className="my-1">
-            <ProductSearchForm setProducts={setProducts} />
+        <div className="flex flex-col text-center px-20">
+          <div className=" flex flex-row justify-between items-center mx-5 mb-5">
+            {query ? (
+              <h1 className="text-3xl">
+                우리 엄마가 찾은
+                <strong className="font-semibold text-orange-600">
+                  {query}
+                </strong>{' '}
+                입니다.{' '}
+              </h1>
+            ) : (
+              <h1 className="text-3xl">" 엄마 ~ 검색해주세요 "</h1>
+            )}
+            <ProductSearchForm setProducts={setProducts} setQuery={setQuery} />
           </div>
           <ul className="flex flex-wrap justify-center">
             {cleanedProducts.map((product) => (
               <li key={product.productId} className="w-1/4 p-4">
                 <Link
-                  className="flex flex-col items-center justify-evenly text-center p-2 hover:scale-105 transition-transform ease-in-out duration-200 bg-white shadow-md rounded-lg h-[420px]"
+                  className="flex flex-col items-center justify-evenly text-center p-2  hover:scale-105 transition-transform ease-in-out duration-200 bg-white shadow-md rounded-lg h-[400px]"
                   href={product.link}
                 >
                   <Image
@@ -123,7 +132,7 @@ const HomePage = () => {
             <button
               onClick={handleNextPage}
               className="bg-orange-600 hover:bg-orange-700 text-white font-semibold rounded-full px-7 py-2 transition-colors duration-300"
-              disabled={isPageLoading} // 페이지 로딩 중 버튼 비활성화
+              disabled={isPageLoading}
             >
               {isPageLoading ? '로딩 중...' : '다음'}
             </button>

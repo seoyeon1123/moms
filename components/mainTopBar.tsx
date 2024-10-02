@@ -32,12 +32,12 @@ export default async function MainTopBar() {
 
   console.log(babyProfile);
   return (
-    <div className="p-10 flex flex-col gap-2 bg-white w-full h-32 border border-b-2 pb-10">
+    <div className=" pt-5 flex flex-col gap-2 bg-white w-full h-28 border border-b-2 pb-10 px-20 fixed top-0 left-0 right-0 z-50">
       <div className="flex flex-row justify-between">
         <Link href="/home">
           <MomsLogo />
         </Link>
-        <div className="flex flex-row gap-6 items-center rounded-full border-4 border-orange-300 bg-opacity-40 px-5 py-1">
+        <div className="flex flex-row gap-6 items-center rounded-full border-4  border-orange-300 bg-opacity-40 px-5 py-1">
           <div className="flex flex-row items-center gap-2">
             {babyProfile?.babyGender === '남자' ? (
               <FontAwesomeIcon icon={faMars} className="text-blue-500 size-6" />

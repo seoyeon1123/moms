@@ -14,7 +14,7 @@ export default function SelectorCategory({
   };
 
   useEffect(() => {
-    setSelectCategory('상의'); // 기본값으로 설정
+    setSelectCategory('상의');
   }, []);
 
   return (
@@ -23,7 +23,7 @@ export default function SelectorCategory({
         value={selectValue}
         onChange={onChangeValue}
         name="category"
-        className="mx-5 mt-5 bg-orange-500 p-2 rounded-full text-sm text-white font-bold"
+        className="bg-orange-500 p-2 rounded-full text-sm text-white font-bold"
       >
         <option value={'상의'} className="bg-orange-500 bg-opacity-40">
           상의

@@ -4,7 +4,7 @@ import MomsLogo from '../lib/logo';
 export default function AuthTopBar() {
   return (
     <>
-      <div className="fixed top-0 left-0 w-full bg-white shadow-md z-50 h-28 p-6">
+      <div className="fixed top-0 left-0 w-full bg-white shadow-md z-50 h-24 pt-3">
         <div className="flex flex-row justify-around mt-4 mb-2">
           <div className="flex flex-row justify-center items-center gap-6">
             <MomsLogo />

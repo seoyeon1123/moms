@@ -8,7 +8,7 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/16/solid';
 
-const ITEMS_PER_PAGE = 6;
+const ITEMS_PER_PAGE = 8;
 
 export default function ProductList({
   setProductId,
@@ -56,15 +56,15 @@ export default function ProductList({
   );
 
   return (
-    <div className="flex flex-col min-h-[768px] p-5 ">
-      <div className="flex flex-wrap justify-start flex-grow">
+    <div className="flex flex-col min-h-[738px] ">
+      <div className="flex-wrap justify-start flex-grow grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
         {currentProducts.map((product) => (
           <div
             key={product.id}
-            className="flex flex-col w-1/3 p-2 justify-start items-center"
+            className="flex flex-col p-2 justify-start items-center"
             onClick={() => setProductId(product.id.toString())}
           >
-            <div className="flex flex-col items-center justify-evenly text-center p-2 hover:scale-105 transition-transform ease-in-out duration-200 bg-white shadow-md rounded-lg">
+            <div className="flex flex-col items-center justify-evenly text-center p-2 hover:scale-105 transition-transform ease-in-out duration-200 bg-white shadow-md rounded-lg h-[320px] ">
               <Image
                 src={`${product.photo}/public`}
                 alt={product.title}
@@ -74,7 +74,9 @@ export default function ProductList({
               />
               <div className="flex flex-col justify-center items-center">
                 <div className="flex flex-row gap-2 p-2 items-center">
-                  <h1 className="text-lg font-semibold">{product.title}</h1>
+                  <h1 className="text-sm font-bold  max-w-[16ch] break-words">
+                    {product.title}
+                  </h1>
                   {product.share && (
                     <h1 className="text-sm bg-orange-600 px-2 rounded-full text-white">
                       나눔중
@@ -99,7 +101,7 @@ export default function ProductList({
         ))}
       </div>
 
-      <div className="flex justify-center items-center mt-4">
+      <div className="flex justify-center items-center">
         <button
           className="flex items-center justify-center w-10 h-10 bg-white rounded-full shadow-md mr-2 "
           onClick={handlePrevious}

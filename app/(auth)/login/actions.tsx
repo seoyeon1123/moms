@@ -59,7 +59,20 @@ export default async function LoginAction(prevState: any, formData: FormData) {
       const session = await getSession();
       session.id = user?.id;
       await session.save();
-      redirect('/profile');
+      const babyProfile = await db.babyProfile.findMany({
+        where: {
+          userId: session.id!,
+        },
+        select: {
+          id: true,
+        },
+      });
+
+      if (!babyProfile) {
+        redirect('/profile');
+      } else {
+        redirect('/home');
+      }
     } else {
       return {
         fieldErrors: {

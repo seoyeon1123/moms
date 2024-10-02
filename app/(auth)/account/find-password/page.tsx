@@ -50,11 +50,7 @@ export default function FindPassword() {
   };
 
   return (
-    <div className="mx-auto flex flex-col justify-start w-full max-w-md h-screen gap-10 px-4 mt-56">
-      <div className="flex justify-center mb-8">
-        <MomsLogo />
-      </div>
-
+    <div className="mx-auto flex flex-col justify-start w-full max-w-md h-screen gap-10 px-4 mt-80">
       {resetMode ? (
         <div className="flex flex-col items-start gap-5 w-full max-w-md p-5">
           <p className="text-lg font-semibold">

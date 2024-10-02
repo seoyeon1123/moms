@@ -1,5 +1,4 @@
 'use client';
-
 import SaveBabyProfile, { getUploadUrl } from '@/app/profile/actions';
 import { PhotoIcon } from '@heroicons/react/16/solid';
 import Image from 'next/image';

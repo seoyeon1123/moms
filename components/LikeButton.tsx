@@ -1,10 +1,6 @@
 'use client';
 
-import { HandThumbUpIcon } from '@heroicons/react/24/solid';
-import {
-  HeartIcon,
-  HandThumbUpIcon as OutlineHandThumbUpIcon,
-} from '@heroicons/react/24/outline';
+import { HeartIcon } from '@heroicons/react/24/outline';
 import { useOptimistic } from 'react';
 import {
   dislikeProduct,
@@ -27,12 +23,15 @@ export default function LikeButton({
     (previousState, payload) => {
       return {
         isLiked: !previousState.isLiked,
-        likeCount: previousState.isLiked ? previousState.likeCount - 1 : +1,
+        likeCount: previousState.isLiked
+          ? previousState.likeCount - 1
+          : previousState.likeCount + 1, // +1을 적절히 수정
       };
     }
   );
 
   const onClick = async () => {
+    // 현재 상태 기준으로 반대로 액션 수행
     reduceFn(null);
     if (isLiked) {
       await dislikeProduct(productId);
@@ -42,17 +41,17 @@ export default function LikeButton({
   };
 
   return (
-    <>
-      <button
-        onClick={onClick}
-        className="flex items-center gap-2   transition-colors"
-      >
-        {state.isLiked ? (
-          <HeartIcon className="size-8 text-red-600" />
-        ) : (
-          <HeartIcon className="size-8 text-black" />
-        )}
-      </button>
-    </>
+    <button
+      onClick={onClick}
+      className={`flex items-center gap-2 transition-colors ${
+        state.isLiked ? 'text-red-600' : 'text-black'
+      }`}
+    >
+      {state.isLiked ? (
+        <HeartIcon className="w-6 h-6 text-red-600" />
+      ) : (
+        <HeartIcon className="w-6 h-6 text-black" />
+      )}
+    </button>
   );
 }

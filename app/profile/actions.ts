@@ -1,8 +1,8 @@
 'use server';
 import z from 'zod';
-import db from '../../lib/db';
 import { redirect } from 'next/navigation';
 import getSession from '@/lib/session';
+import db from '@/lib/db';
 
 const formSchema = z.object({
   photo: z.string({ required_error: '사진을 저장해주세요' }),

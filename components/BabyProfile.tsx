@@ -1,15 +1,23 @@
 'use client';
 import Image from 'next/image';
 import { useState } from 'react';
-import ProfileImage from './ProfileImageUpload';
 import Input from './input';
 import AgeGroutSelector from './AgeGroupSelector';
 import GenderSelection from './GenderSelection';
 import { useFormState } from 'react-dom';
-import SaveBabyProfile, { getUploadUrl } from '@/app/profile/actions';
 import { PhotoIcon } from '@heroicons/react/16/solid';
+import { useImageUpload } from './UseImageUpload';
+import { useInterceptAction } from './useInterceptAction';
+import SaveBabyProfile from '@/app/profile/actions';
 
 export default function MyBabyProfile() {
+  const { preview, uploadUrl, photoId, onChangeImage } = useImageUpload();
+  const interceptAction = useInterceptAction(
+    uploadUrl,
+    photoId,
+    SaveBabyProfile
+  );
+
   const [selectedAgeGroup, setSelectedAgeGroup] = useState<string>('');
   const [selectedGender, setSelectedGender] = useState('');
 
@@ -21,56 +29,12 @@ export default function MyBabyProfile() {
     setSelectedGender(value);
   };
 
-  const [preview, setPreview] = useState('');
-  const [uploadUrl, setUploadUrl] = useState('');
-  const [photoId, setPhotoId] = useState('');
-
-  const onChangeImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
-    const {
-      target: { files },
-    } = e;
-    if (!files) {
-      return;
-    }
-
-    const file = files[0];
-    const url = URL.createObjectURL(file);
-    setPreview(url);
-    const { result, success } = await getUploadUrl();
-    if (success) {
-      const { id, uploadURL } = result;
-      setUploadUrl(uploadURL);
-      setPhotoId(id);
-    }
-    console.log(result);
-  };
-
-  const interceptAction = async (prevState: any, formData: FormData) => {
-    const file = formData.get('photo');
-    if (!file) {
-      return;
-    }
-    const cloudflareForm = new FormData();
-    cloudflareForm.append('file', file);
-    const response = await fetch(uploadUrl, {
-      method: 'POST',
-      body: cloudflareForm,
-    });
-    console.log(await response.text());
-    if (response.status !== 200) {
-      return;
-    }
-    const photoUrl = `https://imagedelivery.net/2YRH3jpkhrWOOYZOL3zGhA/${photoId}`;
-    formData.set('photo', photoUrl);
-    return SaveBabyProfile(prevState, formData);
-  };
-
   const [state, action] = useFormState(interceptAction, null);
 
   return (
     <form action={action}>
       <div className="w-screen h-screen flex flex-col justify-center items-center p-6">
-        <div className=" p-20 bg-white rounded-xl shadow-xl">
+        <div className="p-20 bg-white rounded-xl shadow-xl">
           <div className="flex flex-row gap-4 mb-30 justify-center items-center">
             <h1 className="text-4xl font-bold text-center">
               우리 아이의 프로필을 완성시켜주세요
@@ -98,7 +62,7 @@ export default function MyBabyProfile() {
                 id="profileImage"
               />
             </div>
-            <div className=" flex flex-col gap-5 ">
+            <div className="flex flex-col gap-5">
               <div className="w-full max-w-md">
                 <h2 className="text-lg mb-1">🍼 아이의 이름을 입력해주세요</h2>
                 <Input
@@ -116,7 +80,7 @@ export default function MyBabyProfile() {
               </div>
 
               <div className="w-full max-w-md">
-                <h2 className="text-lg ">🍼 우리 아이의 성별을 선택해주세요</h2>
+                <h2 className="text-lg">🍼 우리 아이의 성별을 선택해주세요</h2>
                 <GenderSelection onChange={handleGenderChange} />
               </div>
 

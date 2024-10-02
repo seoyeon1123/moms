@@ -19,7 +19,23 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} mx-auto bg-yellow-50 opacity-80`}>
+      <body className={`${inter.className} mx-auto bg-yellow-50`}>
+        <div
+          style={{
+            backgroundImage: "url('/배경.png')",
+            backgroundSize: 'cover',
+            backgroundPosition: 'center',
+            minHeight: '100vh',
+            opacity: 0.5, // 배경 투명도 50% 설정
+            position: 'fixed', // 배경 이미지 고정
+            top: 0,
+            left: 0,
+            right: 0,
+            bottom: 0,
+            zIndex: -1,
+            backgroundRepeat: 'repeat', // 이미지 반복
+          }}
+        />
         {children}
       </body>
     </html>

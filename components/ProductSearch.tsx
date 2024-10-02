@@ -5,11 +5,13 @@ import { getProduct } from '@/app/(tab)/products/markets/action';
 import { NaverProduct } from '@/types/NaverProduct';
 
 interface ProductSearchFormProps {
-  setProducts: (products: NaverProduct[]) => void; // 부모 컴포넌트의 setProducts 함수
+  setProducts: (products: NaverProduct[]) => void;
+  setQuery: (data: string) => void;
 }
 
 export default function ProductSearchForm({
   setProducts,
+  setQuery,
 }: ProductSearchFormProps) {
   const [product, setProduct] = useState('');
 
@@ -20,9 +22,11 @@ export default function ProductSearchForm({
       return;
     }
     try {
+      // 새로운 검색을 시작할 때 기존 제품 목록을 초기화
+      setProducts([]);
       const data = await getProduct({ query: product, offset: 1 });
-      setProducts(data); // 검색된 상품 세트
-      setProduct(''); // 입력값 초기화
+      setProducts(data); // 새로운 검색 결과로 제품 목록 업데이트
+      setQuery(product); // 검색어를 업데이트
     } catch (error) {
       console.error('제품 검색 중 오류 발생:', error);
     }
@@ -30,7 +34,7 @@ export default function ProductSearchForm({
 
   return (
     <form
-      className="flex flex-row justify-end items-center left-3 gap-2 pr-8 my-5"
+      className="flex flex-row justify-end items-center"
       onSubmit={handleSearch}
     >
       <input

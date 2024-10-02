@@ -35,11 +35,7 @@ export default function FindUsername() {
   };
 
   return (
-    <div className="mx-auto flex flex-col justify-start w-full max-w-md h-screen gap-10 px-4 mt-56">
-      <div className="flex justify-center mb-10">
-        <MomsLogo />
-      </div>
-
+    <div className="mx-auto flex flex-col justify-start w-full max-w-md h-screen gap-10 px-4 mt-80">
       {username ? (
         <>
           <p className="mt-4 text-2xl border-2 p-3 rounded-full bg-white text-center">
