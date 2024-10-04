@@ -18,6 +18,7 @@ model User {
   products Product[]
 
   like Like[]
+  post Post[]
 }
 
 model BabyProfile {
@@ -57,4 +58,17 @@ model Like {
 
   product        Product         @relation(fields: [productId], references: [id], onDelete: Cascade)
   productId Int
+}
+
+model Post {
+  id Int @id @default(autoincrement())
+  title String
+  description String
+  photo String?
+  category String
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
+  views Int @default(0)
+  user        User         @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId Int
 }

@@ -8,11 +8,6 @@
   text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000,
     1px 1px 0 #000;
 }
-
-.spin-slow {
-  animation: spin 10s linear infinite;
-}
-
 @keyframes spin {
   0% {
     transform: rotate(0deg);
@@ -20,6 +15,9 @@
   100% {
     transform: rotate(360deg);
   }
+}
+.spin-slow {
+  animation: spin 10s linear infinite;
 }
 
 .btn {

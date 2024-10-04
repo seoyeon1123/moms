@@ -8,20 +8,22 @@ import { useEffect, useState } from 'react';
 import Image from 'next/image';
 import { ChevronLeftIcon, ChevronRightIcon } from '@heroicons/react/16/solid';
 
-const ITEMS_PER_PAGE = 8;
-
 export default function ProductList({
   setProductId,
   selectCategory,
   setNickName,
+  showThreeColumns,
 }: {
   setProductId: (id: string) => void;
   setNickName: (nickname: string) => void;
   selectCategory: string;
+  showThreeColumns: boolean;
 }) {
   const [products, setProducts] = useState<any[]>([]);
   const [babyProfile, setBabyProfile] = useState<any>(null);
   const [currentPage, setCurrentPage] = useState(0);
+
+  const ITEMS_PER_PAGE = showThreeColumns ? 12 : 8;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -57,7 +59,13 @@ export default function ProductList({
 
   return (
     <div className="flex flex-col min-h-[738px] ">
-      <div className="flex-wrap justify-start flex-grow grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-2 ">
+      <div
+        className={`flex-wrap justify-start flex-grow grid ${
+          showThreeColumns
+            ? 'grid-cols-2 md:grid-cols-4 lg:grid-cols-4'
+            : 'grid-cols-2 md:grid-cols-4 lg:grid-cols-6'
+        } gap-2`}
+      >
         {currentProducts.map((product) => (
           <div
             key={product.id}

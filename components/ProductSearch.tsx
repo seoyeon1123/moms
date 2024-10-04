@@ -16,17 +16,16 @@ export default function ProductSearchForm({
   const [product, setProduct] = useState('');
 
   const handleSearch = async (e: React.FormEvent) => {
-    e.preventDefault(); // 폼 제출 방지
+    e.preventDefault();
     if (!product.trim()) {
       console.error('검색어가 비어있습니다.');
       return;
     }
     try {
-      // 새로운 검색을 시작할 때 기존 제품 목록을 초기화
       setProducts([]);
       const data = await getProduct({ query: product, offset: 1 });
-      setProducts(data); // 새로운 검색 결과로 제품 목록 업데이트
-      setQuery(product); // 검색어를 업데이트
+      setProducts(data);
+      setQuery(product);
     } catch (error) {
       console.error('제품 검색 중 오류 발생:', error);
     }

@@ -19,7 +19,7 @@ const HomePage = () => {
   const [currentPage, setCurrentPage] = useState(0);
   const [isLoading, setIsLoading] = useState(true); // 첫 로딩 상태
   const [isPageLoading, setIsPageLoading] = useState(false);
-  const productNum = 8;
+  const productNum = 15;
 
   const [query, setQuery] = useState('');
 
@@ -45,7 +45,9 @@ const HomePage = () => {
             (product: NaverProduct) =>
               !existingProductIds.has(product.productId)
           );
-          return [...prevProducts, ...newProducts];
+
+          const totalProducts = newProducts.slice(0, 10);
+          return [...prevProducts, ...totalProducts];
         });
       }
     } catch (error) {
@@ -104,7 +106,7 @@ const HomePage = () => {
           </div>
           <ul className="flex flex-wrap justify-center">
             {cleanedProducts.map((product) => (
-              <li key={product.productId} className="w-1/4 p-4">
+              <li key={product.productId} className="w-1/5 p-4 grid-cols-5">
                 <Link
                   className="flex flex-col items-center justify-evenly text-center p-2  hover:scale-105 transition-transform ease-in-out duration-200 bg-white shadow-md rounded-lg h-[400px]"
                   href={product.link}
