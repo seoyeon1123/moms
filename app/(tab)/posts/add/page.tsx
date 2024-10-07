@@ -10,31 +10,94 @@ import Image from 'next/image';
 import { useState, useRef } from 'react';
 import PostAddAction from './actions';
 import { useFormState } from 'react-dom';
+import { getUploadUrl } from '@/app/profile/actions';
 
 export default function Posts() {
   const [selectCategory, setSelectCategory] = useState('');
-
-  const { onChangeImage, preview, uploadUrl, photoId } = useImageUpload();
-  const interceptAction = useInterceptAction(
-    uploadUrl,
-    photoId || '',
-    PostAddAction
-  );
   const [description, setDescription] = useState('');
-  //const textareaRef = useRef<HTMLTextAreaElement>(null);
+  const [preview, setPreview] = useState('');
+  const [uploadUrl, setUploadUrl] = useState('');
+  const [photoId, setPhotoId] = useState('');
+  const onImageChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const {
+      target: { files },
+    } = e;
+    if (!files) {
+      return;
+    }
+    const file = files[0];
 
-  // const handleEmojiSelect = (emoji: string) => {
-  //   if (textareaRef.current) {
-  //     const startPos = textareaRef.current.selectionStart;
-  //     const endPos = textareaRef.current.selectionEnd;
-  //     const newValue =
-  //       description.substring(0, startPos) +
-  //       emoji +
-  //       description.substring(endPos, description.length);
-  //     setDescription(newValue);
-  //     textareaRef.current.focus();
-  //   }
-  // };
+    if (!file.type.startsWith('image/')) {
+      return {
+        error: '이미지 파일만 업로드 가능합니다. ',
+      };
+    }
+
+    const fileSizeInMd = file.size / (1024 * 1024);
+
+    if (fileSizeInMd > 2) {
+      return {
+        error:
+          '이미지의 크기가 2MD를 초과하는 이미지는 업로드 할 수 없습니다. ',
+      };
+    }
+    const url = URL.createObjectURL(file);
+    setPreview(url);
+    const { result, success } = await getUploadUrl();
+    if (success) {
+      const { id, uploadURL } = result;
+      setUploadUrl(uploadURL);
+      setPhotoId(id);
+    }
+    console.log(result);
+  };
+
+  const interceptAction = async (prevState: any, formData: FormData) => {
+    const file = formData.get('photo');
+
+    const cloudflareForm = new FormData();
+    if (file) {
+      cloudflareForm.append('file', file);
+
+      const response = await fetch(uploadUrl, {
+        method: 'POST',
+        body: cloudflareForm,
+      });
+
+      console.log(await response.text());
+
+      if (response.status !== 200) {
+        return;
+      }
+
+      // photoId가 존재하지 않거나 기본 값일 경우 null로 설정
+      if (!photoId || photoId === '2YRH3jpkhrWOOYZOL3zGhA') {
+        formData.set('photo', null!);
+      } else {
+        const photoUrl = `https://imagedelivery.net/2YRH3jpkhrWOOYZOL3zGhA/${photoId}`;
+        formData.set('photo', photoUrl);
+      }
+    } else {
+      formData.set('photo', null!);
+    }
+
+    return PostAddAction(prevState, formData);
+  };
+
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  const handleEmojiSelect = (emoji: string) => {
+    if (textareaRef.current) {
+      const startPos = textareaRef.current.selectionStart;
+      const endPos = textareaRef.current.selectionEnd;
+      const newValue =
+        description.substring(0, startPos) +
+        emoji +
+        description.substring(endPos, description.length);
+      setDescription(newValue);
+      textareaRef.current.focus();
+    }
+  };
 
   const [state, action] = useFormState(interceptAction, null);
 
@@ -58,7 +121,7 @@ export default function Posts() {
             >
               <PhotoIcon className="size-8 hover:text-orange-600" />
               <input
-                onChange={onChangeImage}
+                onChange={onImageChange}
                 type="file"
                 name="photo"
                 accept="image/*"
@@ -66,7 +129,7 @@ export default function Posts() {
                 className="hidden"
               />
             </label>
-            {/* <EmojiComponent onEmojiSelect={handleEmojiSelect} /> */}
+            <EmojiComponent onEmojiSelect={handleEmojiSelect} />
           </div>
           <Input
             name="title"

@@ -13,6 +13,7 @@ export default function ShareOrSell() {
   const [nickName, setNickName] = useState('');
 
   useEffect(() => {
+    console.log(productId);
     setProductId('');
   }, [selectCategory]);
 

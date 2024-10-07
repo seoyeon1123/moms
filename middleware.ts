@@ -8,6 +8,7 @@ interface IRoutes {
 const publicOnlyUrl: IRoutes = {
   '/': true,
   '/login': true,
+  '/account/signup': true,
   '/account/find-password': true,
   '/account/find-username': true,
 };

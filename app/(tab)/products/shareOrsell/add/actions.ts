@@ -36,30 +36,31 @@ export default async function AddAction(prevState: any, formData: FormData) {
     category: formData.get('category'),
     price: formData.get('price')
       ? parseInt(formData.get('price') as string)
-      : null, // 빈 문자열인 경우 null로 설정
-    share: formData.get('share') === 'on' ? true : null,
+      : null,
+    share: formData.get('share') === 'on' ? true : false, // null 대신 false로 처리
   };
-  console.log(data);
+
+  console.log('Submitted Data:', data);
 
   const result = formSchema.safeParse(data);
-  console.log(result.data);
-  console.log('Validation Result:', result);
+  console.log('Validation Result:', result.success, result.error);
 
   if (!result.success) {
-    return result.error.flatten();
-  } else {
-    const session = await getSession();
-    await db.product.create({
-      data: {
-        title: result.data.title,
-        description: result.data.description,
-        price: result.data.price,
-        share: result.data.share,
-        photo: result.data.photo,
-        category: result.data.category,
-        userId: session.id!,
-      },
-    });
+    return result.error.flatten ? result.error.flatten() : result.error; // flatten() 체크
   }
+
+  const session = await getSession();
+  await db.product.create({
+    data: {
+      title: result.data.title,
+      description: result.data.description,
+      price: result.data.price,
+      share: result.data.share,
+      photo: result.data.photo,
+      category: result.data.category,
+      userId: session.id!,
+    },
+  });
+
   redirect('/products/shareOrsell');
 }

@@ -9,7 +9,7 @@ export async function getProduct({ query, offset = 0 }: GetProductParams) {
   const response = await fetch(
     `/v1/search/shop.json?query=${encodeURIComponent(
       query
-    )}&display=12&offset=${offset}&start=${offset}`,
+    )}&display=15&offset=${offset}&start=${offset}`,
     {
       method: 'GET',
       headers: {

@@ -5,7 +5,7 @@ import {
   getProductDetail,
 } from '@/app/(tab)/products/shareOrsell/actions';
 import { formatToDayAndTime, formatToWon } from '@/lib/utils';
-import { GiftIcon, HeartIcon } from '@heroicons/react/24/outline';
+import { GiftIcon } from '@heroicons/react/24/outline';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
 import LikeButton from './LikeButton';
@@ -16,15 +16,6 @@ interface IProductDetailProps {
   nickName: string;
 }
 
-interface IProductProps {
-  title: string;
-  description: string;
-  photo: string;
-  createdAt: string;
-  share: Boolean;
-  category: string;
-}
-
 interface LikeStatus {
   likeCount: number;
   isLiked: boolean;
@@ -32,30 +23,52 @@ interface LikeStatus {
 
 export default function ProductDetail({
   productId,
-  selectCategory,
   nickName,
 }: IProductDetailProps) {
   const [product, setProduct] = useState<any>(null);
   const id = Number(productId);
   const [likeStatus, setLikeStatus] = useState<LikeStatus | null>(null);
+  const [isMounted, setIsMounted] = useState(false);
 
   useEffect(() => {
+    let isMounted = true;
     const fetchData = async () => {
-      if (id) {
+      try {
         const productData = await getProductDetail(id);
-        setProduct(productData);
+        if (isMounted) {
+          setProduct(productData);
+        }
+
+        const likeStatusData = await getLikeStatus(id);
+        if (isMounted) {
+          setLikeStatus(likeStatusData);
+        }
+      } catch (error) {
+        console.error('Error fetching data:', error);
       }
-      const likeStatus = await getLikeStatus(id); // 좋아요 상태를 가져옴
-      setLikeStatus(likeStatus);
     };
 
     fetchData();
+
+    return () => {
+      isMounted = false;
+    };
   }, [id]);
 
+  // Optional: useEffect to track when the component is mounted
+  useEffect(() => {
+    setIsMounted(true);
+    return () => setIsMounted(false);
+  }, []);
+
+  if (!isMounted || !product) {
+    return <div>Loading...</div>;
+  }
+
   return (
-    <div className="flex flex-col justify-center items-center mx-auto m-0 ">
+    <div className="flex flex-col justify-center items-center mx-auto m-0">
       <div className="">
-        <div className="flex flex-col  gap-3 justify-center items-center p-6 mx-auto w-[430px] h-[730px] bg-white rounded-lg shadow-lg ">
+        <div className="flex flex-col gap-3 justify-center items-center p-6 mx-auto w-[430px] h-[730px] bg-white rounded-lg shadow-lg">
           <Image
             src={`${product.photo}/public`}
             alt={product.title}
@@ -87,7 +100,6 @@ export default function ProductDetail({
                 </div>
               )}
             </div>
-
             <h2 className="text-lg break-word w-full bg-yellow-50 h-auto p-2 text-neutral-600 max-w-[32ch] break-words">
               {product.description}
             </h2>
@@ -105,7 +117,6 @@ export default function ProductDetail({
               <p>・</p>
               <h1 className="text-sm">조회 {product.views}</h1>
             </div>
-
             <button className="btn shadow-md hover:bg-orange-800 transition duration-200">
               채팅하기
             </button>

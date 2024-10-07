@@ -7,7 +7,7 @@ import z, { nullable } from 'zod';
 const formSchema = z.object({
   title: z.string(),
   description: z.string(),
-  photo: z.string().optional().nullable(), // photo 필드는 선택 사항
+  photo: z.string().optional().nullable(),
   category: z.string(),
 });
 

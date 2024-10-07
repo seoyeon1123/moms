@@ -1,29 +1,38 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-  reactStrictMode: false,
-
   images: {
     remotePatterns: [
       {
         protocol: 'https',
-        hostname: 'shopping-phinf.pstatic.net', // 수정된 부분
-        port: '', // 기본 포트이므로 비워둡니다.
-        pathname: '/**', // 모든 경로를 허용
+        hostname: 'shopping-phinf.pstatic.net',
+        port: '',
+        pathname: '/**',
       },
       {
         protocol: 'https',
-        hostname: 'imagedelivery.net', // 추가된 부분
+        hostname: 'imagedelivery.net',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'customer-6fknsj3llsy5y0kn.cloudflarestream.com',
+        port: '',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'example.com',
         port: '',
         pathname: '/**',
       },
     ],
   },
-
   async rewrites() {
     return [
       {
-        source: '/:path*',
-        destination: 'https://openapi.naver.com/:path*',
+        source: '/v1/search/:path*', // 네이버 API 경로로 리디렉션
+        destination: 'https://openapi.naver.com/v1/search/:path*',
       },
     ];
   },

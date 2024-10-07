@@ -70,7 +70,7 @@ export default function ProductList({
           <div
             key={product.id}
             className="flex flex-col p-2 justify-start items-center"
-            onClick={() => setProductId(product.id.toString())}
+            onClick={() => setProductId(product.id)}
           >
             <div className="flex flex-col items-center justify-evenly text-center p-2 hover:scale-105 transition-transform ease-in-out duration-200 bg-white shadow-md rounded-lg h-[320px] ">
               <Image

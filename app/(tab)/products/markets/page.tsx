@@ -114,12 +114,12 @@ const HomePage = () => {
                   <Image
                     src={product.image}
                     alt={product.title}
-                    width={300}
-                    height={300}
+                    width={280}
+                    height={280}
                     className="aspect-square object-cover"
                   />
                   <div className="flex flex-col gap-2 pt-2 px-10">
-                    <h2 className="font-semibold text-gray-800">
+                    <h2 className="font-semibold text-base text-gray-800">
                       {product.title}
                     </h2>
                     <p className="text-sm text-orange-600">
