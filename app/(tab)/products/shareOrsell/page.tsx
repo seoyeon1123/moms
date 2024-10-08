@@ -5,7 +5,7 @@ import ProductList from '@/components/ProductList';
 import SelectorCategory from '@/components/SelectorCategory';
 import { PlusIcon } from '@heroicons/react/24/outline';
 import Link from 'next/link';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 export default function ShareOrSell() {
   const [productId, setProductId] = useState('');
@@ -31,7 +31,7 @@ export default function ShareOrSell() {
           </Link>
         </div>
 
-        <div className="flex flex-row">
+        <div className="flex flex-row justify-between">
           <div className={productId ? 'w-4/6' : 'w-full'}>
             <ProductList
               setProductId={setProductId}

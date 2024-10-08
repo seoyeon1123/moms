@@ -1,11 +1,12 @@
 'use client';
 
 import SelectPostCategory from '@/components/SelectorPostCategory';
-import { formatToTime } from '@/lib/utils';
+import { formatDate, formatToDayAndTime, formatToTime } from '@/lib/utils';
 import { useEffect, useState } from 'react';
 import { getPosts } from './actions';
 import Link from 'next/link';
 import { PencilSquareIcon } from '@heroicons/react/24/outline';
+import { format, isToday, parseISO } from 'date-fns';
 
 interface IUser {
   username: string;
@@ -25,7 +26,7 @@ export default function Posts() {
   const [selectCategory, setSelectCategory] = useState('육아팁');
   const [newPosts, setPosts] = useState<IPost[]>([]);
   const [currentPage, setCurrentPage] = useState(1);
-  const postsPerPage = 15;
+  const postsPerPage = 12;
 
   useEffect(() => {
     const fetchData = async () => {
@@ -50,14 +51,14 @@ export default function Posts() {
   }
 
   return (
-    <div className="mx-auto px-10">
+    <div className="mx-auto px-16 p-1">
       <div className="flex justify-between items-center my-5">
         <SelectPostCategory setSelectCategory={setSelectCategory} />
         <Link href="/posts/add">
           <PencilSquareIcon className="h-8 w-8 text-orange-600 transition-transform transform hover:scale-110" />
         </Link>
       </div>
-      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3">
+      <div className="grid grid-cols-1 gap-6 md:grid-cols-2 lg:grid-cols-3 pt-2">
         {currentPosts.length > 0 ? (
           currentPosts.map((post) => (
             <div
@@ -73,7 +74,7 @@ export default function Posts() {
                 </p>
                 <div className="flex justify-between text-xs text-gray-500">
                   <span>{post.user.username}</span>
-                  <span>{formatToTime(post.createdAt.toString())}</span>
+                  <span>{formatDate(post.createdAt.toString())}</span>
                 </div>
               </Link>
             </div>

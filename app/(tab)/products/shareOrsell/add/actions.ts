@@ -15,8 +15,7 @@ const formSchema = z.object({
     .string({
       required_error: '내용을 입력해주세요.',
     })
-    .min(5, '내용을 자세하게 입력해주세요. 최소 10글자 입니다.')
-    .max(20, '최대 15글자 입니다.'),
+    .min(5, '내용을 자세하게 입력해주세요. 최소 10글자 입니다.'),
 
   photo: z.string({
     required_error: '사진을 필수적으로 추가해주세요.',

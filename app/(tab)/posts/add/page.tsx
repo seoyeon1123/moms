@@ -148,7 +148,7 @@ export default function Posts() {
               />
 
               <textarea
-                //ref={textareaRef}
+                ref={textareaRef}
                 value={description}
                 onChange={(e) => setDescription(e.target.value)}
                 name="description"
@@ -159,7 +159,7 @@ export default function Posts() {
             </div>
           ) : (
             <textarea
-              // ref={textareaRef}
+              ref={textareaRef}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               name="description"

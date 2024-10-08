@@ -1,7 +1,7 @@
 import { format, isToday, parseISO } from 'date-fns';
 
 export function formatToWon(price: number | string): string {
-  const numericPrice = typeof price === 'string' ? parseFloat(price) : price; // 문자열을 숫자로 변환
+  const numericPrice = typeof price === 'string' ? parseFloat(price) : price;
   return `${numericPrice.toLocaleString('ko')} 원`;
 }
 
@@ -22,42 +22,44 @@ export function formatToTime(date: string): string {
   const formatter = new Intl.DateTimeFormat('ko', {
     hour: 'numeric',
     minute: 'numeric',
-    hour12: true, // Ensures that the time is displayed in 12-hour format with AM/PM
+    hour12: true, // 12시간 형식으로 오전/오후 표시
   });
 
-  return formatter.format(time);
+  return formatter.format(time); // 오전/오후 시간 형식 반환
 }
 
 export function formatToDayAndTime(date: string): string {
   const dateObj = new Date(date);
 
   if (isNaN(dateObj.getTime())) {
-    return 'Invalid date'; // 유효하지 않은 날짜일 경우 반환
+    return 'Invalid date';
   }
 
-  // 날짜 부분 포맷팅
   const dateFormatter = new Intl.DateTimeFormat('ko-KR', {
-    month: 'long', // 'September'
-    day: '2-digit', // '02'
+    month: 'long', // '10월'
+    day: '2-digit', // '23일'
   });
 
-  // 시간 부분 포맷팅
   const timeFormatter = new Intl.DateTimeFormat('ko-KR', {
     hour: '2-digit',
     minute: '2-digit',
-    hour12: true, // 12시간 형식
+    hour12: true, // 12시간 형식으로 오전/오후 표시
   });
 
-  // 날짜와 시간 포맷팅
-  const formattedDate = dateFormatter.format(dateObj);
-  const formattedTime = timeFormatter.format(dateObj);
+  const formattedDate = dateFormatter.format(dateObj); // 날짜 부분 포맷팅
+  const formattedTime = timeFormatter.format(dateObj); // 시간 부분 포맷팅
 
-  return `${formattedDate} ${formattedTime}`;
+  return `${formattedDate} ${formattedTime}`; // 날짜와 시간을 함께 반환
 }
 
 export function formatDate(date: string): string {
-  const parsedDate = parseISO(date);
-  return isToday(parsedDate) ? formatToTime(date) : formatToDayAndTime(date);
+  // 오늘 날짜인 경우 시간만 포맷팅
+  if (isToday(date)) {
+    return formatToTime(date); // 오늘 날짜는 시간만 표시
+  }
+
+  // 그 외의 경우 날짜와 시간을 함께 포맷팅
+  return formatToDayAndTime(date);
 }
 
 export enum ProductStatus {
