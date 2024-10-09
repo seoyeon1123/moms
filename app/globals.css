@@ -27,3 +27,10 @@
 .mainTap {
   @apply transition-transform duration-300 ease-in-out hover:scale-110 hover:text-orange-600;
 }
+
+:root {
+  --fc-button-active-bg-color: transparent;
+
+  --fc-event-bg-color: #fb8494;
+  --fc-event-border-color: #fb8494;
+}
