@@ -11,6 +11,11 @@
   color: orange;
 }
 
+.fc .fc-daygrid {
+  border: 2px solid orange;
+  border-radius: 10px;
+}
+
 .fc .fc-toolbar.fc-header-toolbar {
   padding: 10px 20px;
   border: orange;
