@@ -26,13 +26,13 @@ const CalendarComponent = ({ setDate, photo }: ICalendarComponent) => {
 
   const handleDateClick = (info: DateClickArg) => {
     const clickedDate = info.dateStr;
-    setSelectedDate(clickedDate); // 클릭한 날짜를 상태로 저장
-    setDate(clickedDate); // 부모 컴포넌트에 날짜 전달
+    setSelectedDate(clickedDate);
+    setDate(clickedDate);
 
     const allCells = document.querySelectorAll('.fc-day');
     allCells.forEach((cell) => {
-      (cell as HTMLElement).style.borderColor = ''; // 기존 테두리 제거
-      (cell as HTMLElement).style.borderWidth = ''; // 기존 테두리 두께 제거
+      (cell as HTMLElement).style.borderColor = ''; //
+      (cell as HTMLElement).style.borderWidth = ''; //
     });
 
     const selectedCells = document.querySelectorAll(

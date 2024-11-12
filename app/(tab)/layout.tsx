@@ -1,4 +1,4 @@
-import MainTopBar from '@/components/MainTopBar';
+import MainTopBar from '../../components/MainTopBar';
 
 export default function TabLayout({ children }: { children: React.ReactNode }) {
   return (
