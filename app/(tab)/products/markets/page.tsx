@@ -100,7 +100,7 @@ const HomePage = () => {
                 입니다.{' '}
               </h1>
             ) : (
-              <h1 className="text-3xl">" 엄마 ~ 검색해주세요 "</h1>
+              <h1 className="text-3xl">엄마 ~ 검색해주세요</h1>
             )}
             <ProductSearchForm setProducts={setProducts} setQuery={setQuery} />
           </div>

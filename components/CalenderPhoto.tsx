@@ -30,7 +30,6 @@ export default function CalenderPhoto({ date, setPhoto }: IPhotoProps) {
       if (calenderPhoto.length > 0) {
         setPhoto(calenderPhoto[0].title);
       } else {
-        // 사진이 없으면 empty 상태로 설정
         setPhoto('');
       }
     };
